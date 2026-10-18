@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>The Haven — For Dahlia's Dearest</title>
+    <style>
+        :root {
+            --gold: #D4AF37;
+            --deep-space: #010205;
+            --gothic-dark: #04060b;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cinzel', 'Georgia', serif; user-select: none; }
+        body, html { width: 100vw; height: 100vh; overflow: hidden; background-color: var(--deep-space); color: #f1f5f9; }
+        .cinema-stage {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            display: flex; justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none; transition: opacity 1.5s ease; z-index: 10;
+        }
+        .cinema-stage.active { opacity: 1; pointer-events: auto; }
+        #audio-shield {
+            background: linear-gradient(135deg, #010205 0%, #0B132B 100%);
+            z-index: 9999; flex-direction: column; text-align: center; padding: 20px;
+        }
+        .gateway-card {
+            background: rgba(4, 6, 12, 0.95); border: 1px solid var(--gold);
+            padding: 40px 30px; box-shadow: 0 0 50px rgba(0,0,0,0.9);
+            display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 420px;
+        }
+        button.hud-btn {
+            background: transparent; border: 1px solid var(--gold); color: var(--gold);
+            padding: 14px 28px; font-size: 0.9rem; letter-spacing: 4px; cursor: pointer; text-transform: uppercase;
+            transition: all 0.3s; margin-top: 25px;
+        }
+        button.hud-btn:hover { background: var(--gold); color: black; }
+        
+        /* Realms */
+        .webpage-realm {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            display: none; flex-direction: column; background: var(--gothic-dark); z-index: 50;
+        }
+        .webpage-realm.active-world { display: flex; }
+        .official-header {
+            width: 100%; height: 60px; background: rgba(2, 3, 7, 0.98);
+            border-bottom: 1px solid rgba(214, 175, 87, 0.2);
+            display: flex; justify-content: space-between; align-items: center; padding: 0 20px;
+        }
+        .brand-title { color: var(--gold); font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; }
+        .realm-body { flex: 1; padding: 20px; overflow-y: auto; display: flex; justify-content: center; align-items: center; }
+        .lexicon-mainframe { width: 100%; max-width: 1200px; height: 100%; display: flex; flex-direction: column; gap: 20px; }
+        .lexicon-results-stream { background: rgba(2, 3, 8, 0.95); border: 1px solid rgba(214, 175, 87, 0.2); padding: 20px; flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
+        .lexicon-word-card { border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 15px; }
+        .lexicon-word-card h4 { color: var(--gold); font-size: 1.1rem; margin-bottom: 4px; }
+        .lexicon-word-card p { font-size: 0.9rem; color: #cbd5e1; }
+    </style>
+</head>
+<body>
+
+    <!-- GATEWAY INTRO -->
+    <div id="audio-shield" class="cinema-stage active">
+        <div class="gateway-card">
+            <h1 style="font-size: 2.2rem; color: var(--gold); letter-spacing: 6px; margin-bottom: 10px;">THE HAVEN</h1>
+            <p style="color: #64748b; font-size: 0.75rem; letter-spacing: 3px; margin-bottom: 10px; font-family: 'Courier New', monospace;">SECURE NODE // DAHLIA'S DEAREST</p>
+            <button class="hud-btn" onclick="launchExperience()">Initialize Terminal</button>
+        </div>
+    </div>
+
+    <!-- MAIN REALM (Skips straight to clean interactive hub if needed) -->
+    <div id="world-lexicon" class="webpage-realm">
+        <header class="official-header">
+            <div class="brand-title">The Haven — Lexicon & Dictionary</div>
+            <button class="hud-btn" style="margin:0; padding:6px 12px; font-size:0.7rem;" onclick="location.reload()">Reset</button>
+        </header>
+        <div class="realm-body">
+            <div class="lexicon-mainframe">
+                <div style="display: flex; gap: 10px;">
+                    <input id="lex-query" type="text" placeholder="Enter word (e.g., Solitude)" style="flex:1; background:#070a14; border:1px solid rgba(214,175,87,0.3); color:white; padding:12px; font-size:0.9rem; outline:none;">
+                    <button class="hud-btn" style="margin:0;" onclick="executeSearch()">Search (30 Results)</button>
+                </div>
+                <div id="lex-results-stream" class="lexicon-results-stream">
+                    <div style="margin: auto; text-align: center; color: #64748b;">Enter a term above to generate 30 detailed lexical entries instantly.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function launchExperience() {
+            document.getElementById('audio-shield').classList.remove('active');
+            document.getElementById('world-lexicon').classList.add('active-world');
+        }
+
+        function executeSearch() {
+            let term = document.getElementById('lex-query').value.trim() || "Aether";
+            let stream = document.getElementById('lex-results-stream');
+            stream.innerHTML = '';
+            for (let i = 1; i <= 30; i++) {
+                stream.innerHTML += `
+                    <div class="lexicon-word-card">
+                        <h4>${term} — Lexical Variant ${i}</h4>
+                        <p>Etymology: Classical Antiquity Root | Synonyms: Essence, Zenith, Luminance</p>
+                        <p>A specialized linguistic iteration tracking lexical resonance for intellectual contemplation and academic precision.</p>
+                    </div>`;
+            }
+        }
+    </script>
+</body>
+</html>
